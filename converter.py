@@ -13,13 +13,21 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from pdf2docx import Converter
 
 
-# ---------------------------------------------------
-# TESSERACT PATH
-# ---------------------------------------------------
+import shutil
 
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
+# Tesseract configuration
+# Windows par local development ke liye
+if os.name == "nt":
+    pytesseract.pytesseract.tesseract_cmd = (
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    )
+
+# Streamlit Cloud / Linux ke liye
+else:
+    tesseract_path = shutil.which("tesseract")
+
+    if tesseract_path:
+        pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
 
 # ---------------------------------------------------
